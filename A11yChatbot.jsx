@@ -144,7 +144,7 @@ export default function A11yChatbot({
                   }`}
                 >
                   <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] opacity-80">
-                    {isUser ? 'Você' : 'IA'}
+                    {isUser ? 'Você' : 'Crudo'}
                   </p>
                   <p className="text-base leading-7">{message.text}</p>
                 </li>

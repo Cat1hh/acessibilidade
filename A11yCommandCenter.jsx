@@ -37,10 +37,10 @@ const quickActions = [
 ];
 
 const mascot = {
-  name: 'Lumi',
+  name: 'Crudo',
   // Quando voce adicionar a foto, troque para algo como '/images/mascote-lumi.jpg'
   imageSrc: '',
-  imageAlt: 'Mascote de apoio da plataforma',
+  imageAlt: 'Dinossauro de apoio chamado Crudo, um mascote amigável para ajudar com as solicitações',
 };
 
 const statusOptions = ['Enviado à superintendência', 'Em análise', 'Concluído'];
