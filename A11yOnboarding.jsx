@@ -93,6 +93,7 @@ export default function A11yOnboarding({
       if (!event.shiftKey && document.activeElement === lastElement) {
         event.preventDefault();
         firstElement.focus();
+        return; // <-- CORREÇÃO: return adicionado aqui para fechar a execução do bloco corretamente
       }
     };
 

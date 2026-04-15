@@ -12,6 +12,10 @@ import {
   Search,
   ShieldAlert,
   Users,
+  Clock, // Adicionado para os alertas
+  AlertTriangle, // Adicionado para os alertas
+  OctagonAlert, // Adicionado para os alertas
+  Send // Adicionado para os alertas
 } from 'lucide-react';
 
 const statusOptions = ['Todos', 'Enviado à superintendência', 'Em análise', 'Concluído'];
@@ -41,6 +45,11 @@ export default function AdminScreen({
   const [statusFilter, setStatusFilter] = useState('Todos');
   const [categoryFilter, setCategoryFilter] = useState('Todas');
   const [selectedTicketId, setSelectedTicketId] = useState(tickets[0]?.id ?? null);
+
+  // --- NOVOS ESTADOS PARA O SISTEMA DE ALERTAS ---
+  const [alertType, setAlertType] = useState('green');
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertFeedback, setAlertFeedback] = useState('');
 
   useEffect(() => {
     setLocalTickets(tickets);
@@ -92,6 +101,31 @@ export default function AdminScreen({
 
   const exportTickets = () => {
     downloadJson('tickets-a11y.json', localTickets);
+  };
+
+  // --- NOVA FUNÇÃO PARA DISPARAR O ALERTA ---
+  const handleSendAlert = (e) => {
+    e.preventDefault();
+
+    if (!alertMessage.trim()) {
+      setAlertFeedback('Por favor, digite uma mensagem.');
+      return;
+    }
+
+    const payload = {
+      type: alertType,
+      message: alertMessage,
+      timestamp: new Date().toISOString(),
+      sentBy: user?.name || 'Administrador',
+    };
+
+    console.log('Alerta preparado para envio:', payload);
+
+    // Aqui você conectará com o seu backend (Firebase, Socket.io, etc)
+    
+    setAlertFeedback('✅ Alerta disparado!');
+    setAlertMessage('');
+    setTimeout(() => setAlertFeedback(''), 4000);
   };
 
   return (
@@ -314,6 +348,57 @@ export default function AdminScreen({
                 </button>
               </div>
             </article>
+
+            {/* --- NOVO BLOCO: DISPARO DE ALERTAS PÚBLICOS --- */}
+            <article className="rounded-3xl border border-slate-200 bg-slate-100 p-6 shadow-inner">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-600">Comunicação Direta</p>
+              <h2 className="mt-2 text-2xl font-bold sm:text-3xl">Disparar Alerta</h2>
+              
+              <form onSubmit={handleSendAlert} className="mt-5 space-y-4">
+                <div className="grid grid-cols-3 gap-2">
+                  <label className={`flex cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border-2 p-2 transition-all ${alertType === 'green' ? 'border-green-600 bg-green-50 text-green-700' : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50'}`}>
+                    <input type="radio" name="alertType" value="green" checked={alertType === 'green'} onChange={(e) => setAlertType(e.target.value)} className="sr-only" />
+                    <Clock className="h-6 w-6" />
+                    <span className="text-xs font-bold">Horário</span>
+                  </label>
+
+                  <label className={`flex cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border-2 p-2 transition-all ${alertType === 'orange' ? 'border-orange-600 bg-orange-50 text-orange-700' : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50'}`}>
+                    <input type="radio" name="alertType" value="orange" checked={alertType === 'orange'} onChange={(e) => setAlertType(e.target.value)} className="sr-only" />
+                    <AlertTriangle className="h-6 w-6" />
+                    <span className="text-xs font-bold">Aviso</span>
+                  </label>
+
+                  <label className={`flex cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border-2 p-2 transition-all ${alertType === 'red' ? 'border-red-600 bg-red-50 text-red-700' : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50'}`}>
+                    <input type="radio" name="alertType" value="red" checked={alertType === 'red'} onChange={(e) => setAlertType(e.target.value)} className="sr-only" />
+                    <OctagonAlert className="h-6 w-6" />
+                    <span className="text-xs font-bold">Perigo</span>
+                  </label>
+                </div>
+
+                <textarea
+                  value={alertMessage}
+                  onChange={(e) => setAlertMessage(e.target.value)}
+                  placeholder="Mensagem para os usuários..."
+                  rows="2"
+                  className="w-full resize-none rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-900 outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
+                />
+
+                <button
+                  type="submit"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+                >
+                  <Send className="h-4 w-4" />
+                  Enviar para todos
+                </button>
+
+                {alertFeedback && (
+                  <p className={`text-center text-sm font-semibold ${alertFeedback.includes('✅') ? 'text-green-700' : 'text-red-600'}`}>
+                    {alertFeedback}
+                  </p>
+                )}
+              </form>
+            </article>
+
           </aside>
         </section>
       </section>
