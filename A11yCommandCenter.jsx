@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import A11yOnboarding from './A11yOnboarding';
 import EmergencyAlert from './EmergencyAlert';
-
+import io from 'socket.io-client';
 const initialMessages = [
   {
     id: 1,
@@ -305,6 +305,39 @@ export default function A11yCommandCenter({ user, tickets = [], onTicketsChange,
     setLogoutText('');
     onLogout?.();
   };
+
+  // ALERTA PARA PCD: vibração ao receber alerta do admin
+  useEffect(() => {
+    // Só conecta para usuários PCD
+    if (user?.role !== 'pcd') return;
+
+    const socket = io('http://SEU_SERVIDOR:3000'); // Troque pelo endereço do seu servidor
+
+    let vibrateInterval = null;
+
+    socket.on('vibrate', () => {
+      if (navigator.vibrate) {
+        vibrateInterval = setInterval(() => {
+          navigator.vibrate([1000, 500]);
+        }, 1500);
+      }
+    });
+
+    socket.on('stopVibrate', () => {
+      if (vibrateInterval) {
+        clearInterval(vibrateInterval);
+        navigator.vibrate(0);
+      }
+    });
+
+    return () => {
+      if (vibrateInterval) {
+        clearInterval(vibrateInterval);
+        navigator.vibrate(0);
+      }
+      socket.disconnect();
+    };
+  }, [user?.role]);
 
   return (
     <div className={`min-h-screen ${pageClass}`}>
