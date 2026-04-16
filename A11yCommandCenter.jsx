@@ -38,8 +38,7 @@ const quickActions = [
 
 const mascot = {
   name: 'Crudo',
-  // Quando voce adicionar a foto, troque para algo como '/images/mascote-lumi.jpg'
-  imageSrc: '',
+  imageSrc: '/images/crudo.jpg', // Caminho para sua imagem
   imageAlt: 'Dinossauro de apoio chamado Crudo, um mascote amigável para ajudar com as solicitações',
 };
 
@@ -593,7 +592,7 @@ export default function A11yCommandCenter({ user, tickets = [], onTicketsChange,
                       className={`max-w-[92%] rounded-3xl border p-4 text-base leading-7 ${message.role === 'user' ? 'ml-auto border-slate-900 bg-slate-900 text-white' : 'mr-auto border-slate-300 bg-white text-slate-900'}`}
                     >
                       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] opacity-80">
-                        {message.role === 'user' ? 'Voce' : 'IA'}
+                        {message.role === 'user' ? 'Voce' : 'Crudo'}
                       </p>
                       <p>{message.text}</p>
                     </div>
