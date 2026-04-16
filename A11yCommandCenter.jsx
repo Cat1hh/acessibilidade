@@ -150,7 +150,7 @@ function classifyDemand(text) {
 }
 
 export default function A11yCommandCenter({ user, tickets = [], onTicketsChange, securityAlert, onLogout }) {
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(true); // Sempre abre o onboarding ao entrar
   const [dismissedSecurityAlert, setDismissedSecurityAlert] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [logoutText, setLogoutText] = useState('');
