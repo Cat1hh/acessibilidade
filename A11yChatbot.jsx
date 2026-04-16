@@ -141,12 +141,21 @@ export default function A11yChatbot({
                     isUser
                       ? 'ml-auto border-slate-900 bg-slate-900 text-white'
                       : 'mr-auto border-slate-300 bg-slate-100 text-slate-900'
-                  }`}
+                  } flex items-start gap-3`}
                 >
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] opacity-80">
-                    {isUser ? 'Você' : 'Crudo'}
-                  </p>
-                  <p className="text-base leading-7">{message.text}</p>
+                  {!isUser && (
+                    <img
+                      src="/images/crudo.jpg"
+                      alt="Crudo, mascote de apoio"
+                      className="h-8 w-8 rounded-full border border-slate-300 object-cover"
+                    />
+                  )}
+                  <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] opacity-80">
+                      {isUser ? 'Você' : 'Crudo'}
+                    </p>
+                    <p className="text-base leading-7">{message.text}</p>
+                  </div>
                 </li>
               );
             })}
