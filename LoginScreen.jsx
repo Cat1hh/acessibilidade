@@ -73,7 +73,7 @@ export default function LoginScreen({ onLogin }) {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   className="w-full bg-transparent text-base text-slate-900 outline-none placeholder:text-slate-500"
-                  placeholder="admin@petrobras.com ou pcd@petrobras.com"
+                  placeholder="digite seu e-mail"
                   autoComplete="email"
                 />
               </div>
@@ -88,7 +88,7 @@ export default function LoginScreen({ onLogin }) {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   className="w-full bg-transparent text-base text-slate-900 outline-none placeholder:text-slate-500"
-                  placeholder="A11y@2026 ou A11yPCD@2026"
+                  placeholder="digite sua senha"
                   autoComplete="current-password"
                 />
               </div>
