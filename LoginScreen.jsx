@@ -108,11 +108,7 @@ export default function LoginScreen({ onLogin }) {
             </p>
           ) : null}
 
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-700">
-            Admin: <span className="font-semibold">admin@petrobras.com</span> / <span className="font-semibold">A11y@2026</span><br />
-            PCD 1: <span className="font-semibold">pcd@petrobras.com</span> / <span className="font-semibold">A11yPCD@2026</span><br />
-            PCD 2: <span className="font-semibold">pcd2@petrobras.com</span> / <span className="font-semibold">A11yPCD2@2026</span>
-          </div>
+
         </div>
       </section>
     </main>
